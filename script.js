@@ -1,7 +1,6 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
+// below is vanilla javascript for doing it the long way, which was my rough draft. all the code is function, though not practical.
 
+//each variable contains the save button for each hour block
 // var store9AM = document.querySelector('#btn1')
 // var store10AM = document.querySelector('#btn2')
 // var store11AM = document.querySelector('#btn3')
@@ -13,7 +12,7 @@
 // var store5PM = document.querySelector('#btn9')
 
 
-
+// below is the save and render text function for each hour block
 // function save9AM() {
 //     textArea = document.querySelector('#h9').value;
 //     localStorage.setItem("#h9", JSON.stringify(textArea));
@@ -108,9 +107,10 @@
 
 // var currentTime = dayjs().format("HH")
 
-
+// here is the updated code in jQuery which combines all the functions into 1 function and way less lines of code.
 $(function () {
     const currentHour = dayjs().hour();
+    console.log(currentHour)
     function timeBlock() {
         const parentId = parseInt($(this).attr('id'));
         postData(parentId)
@@ -123,7 +123,7 @@ $(function () {
         }
     }
 
-    function save(event) {
+    function saveData(event) {
         var textArea = $(event.target).siblings("textarea").val()
         var parentId = $(event.target).parent(".time-block").attr("id")
         if (event.target.matches("i")) {
@@ -146,13 +146,13 @@ $(function () {
     date();
 
 
-    $('.saveBtn').on('click', save)
+    $('.saveBtn').on('click', saveData)
     $('.time-block').each(timeBlock)
 })
 
 
 
-
+// below is the event listener to add the save function to each button click
 
 // store9AM.addEventListener('click', save9AM)
 // store10AM.addEventListener('click', save10AM)
@@ -164,6 +164,9 @@ $(function () {
 // store4PM.addEventListener('click', save4PM)
 // store5PM.addEventListener('click', save5PM)
 
+
+
+//below is the variables for each time block ID
 // var firstBlock = document.querySelector("#h9");
 // var secondBlock = document.querySelector("#h10");
 // var thirdBlock = document.querySelector("#h11");
@@ -182,10 +185,10 @@ $(function () {
 // var hour15 = 15;
 // var hour16 = 16;
 // var hour17 = 17;
-// // im not sure if hour refreshes without reloading page
 
 
-// // below is code to manually make each function with vanilla javascript.
+
+// // below are functions to put the past, present, or future class on each time block individually
 
 // console.log(currentTime);
 
@@ -274,7 +277,7 @@ $(function () {
 // console.log()
 
 
-
+// below i am calling all functions
 
 // firstHour();
 // secondHour();
@@ -292,22 +295,3 @@ $(function () {
 
 
 
-
-// TODO: Add a listener for click events on the save button. This code should
-// use the id in the containing time-block as a key to save the user input in
-// local storage. HINT: What does `this` reference in the click listener
-// function? How can DOM traversal be used to get the "hour-x" id of the
-// time-block containing the button that was clicked? How might the id be
-// useful when saving the description in local storage?
-//
-// TODO: Add code to apply the past, present, or future class to each time
-// block by comparing the id to the current hour. HINTS: How can the id
-// attribute of each time-block be used to conditionally add or remove the
-// past, present, and future classes? How can Day.js be used to get the
-// current hour in 24-hour time?
-//
-// TODO: Add code to get any user input that was saved in localStorage and set
-// the values of the corresponding textarea elements. HINT: How can the id
-// attribute of each time-block be used to do this?
-//
-// TODO: Add code to display the current date in the header of the page.
